@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Talkie — Custom AI Avatar Creation by Game Pill</title>
+  <title>Talkie — Custom Avatar Creation by Game Pill</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Pacifico&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -11,8 +11,8 @@
     :root {
       --pink:   #f472b6;
       --pink2:  #ec4899;
-      --purple: #7c3aed;
-      --blue:   #3b82f6;
+      --purple: #00BBFF;
+      --blue:   #00BBFF;
       --navy:   #1e1b4b;
       --white:  #ffffff;
     }
@@ -30,9 +30,9 @@
     .stars {
       position: fixed; inset: 0; pointer-events: none; z-index: 0;
       background:
-        radial-gradient(ellipse at 20% 20%, #3b0764 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 80%, #1e3a8a 0%, transparent 60%),
-        linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #1a1a4e 100%);
+        radial-gradient(ellipse at 20% 20%, #001a2e 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 80%, #001f3f 0%, transparent 60%),
+        linear-gradient(135deg, #0f0c29 0%, #0a1628 50%, #0d1b2a 100%);
     }
     .stars::before, .stars::after {
       content: '';
@@ -63,7 +63,7 @@
       display: flex; align-items: center; justify-content: space-between;
       background: rgba(15, 12, 41, 0.85);
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+      border-bottom: 1px solid rgba(0, 187, 255, 0.3);
     }
     .nav-brand { display: flex; align-items: baseline; gap: 8px; }
     .nav-logo {
@@ -143,6 +143,12 @@
       text-decoration: none; display: inline-block;
     }
     .btn-secondary:hover { background: rgba(255,255,255,0.14); }
+    .cta-band {
+      text-align: center;
+      padding: 48px 20px 8px;
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+    }
+    .cta-band p { color: rgba(255,255,255,0.55); font-size: 0.95rem; margin: 0; }
 
     /* ── AVATAR STRIP ──────────────────────────── */
     .avatar-strip {
@@ -206,7 +212,7 @@
       position: relative;
     }
     #demo-avatar-canvas {
-      width: 280px; height: 280px;
+      width: 364px; height: 364px;
       border-radius: 20px;
       margin-bottom: 20px;
       display: block;
@@ -247,6 +253,26 @@
     .demo-btn.active {
       background: linear-gradient(135deg, #ef4444, #b91c1c);
       box-shadow: 0 4px 20px rgba(239,68,68,0.4);
+    }
+    .demo-icon-btn {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 50%;
+      width: 44px; height: 44px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      color: white; cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .demo-icon-btn:hover { background: rgba(255,255,255,0.16); }
+    .demo-icon-btn.active {
+      background: rgba(251,191,36,0.2);
+      border-color: rgba(251,191,36,0.5);
+    }
+    .demo-icon-btn.muted {
+      background: rgba(239,68,68,0.2);
+      border-color: rgba(239,68,68,0.5);
     }
     .demo-text-input {
       flex: 1;
@@ -698,21 +724,21 @@
   <!-- NAV -->
   <nav>
     <div class="nav-brand">
+      <img src="gamePillLogo_spacceg (2).png" alt="Game Pill" style="height:46px;width:auto;margin-right:10px;" />
       <span class="nav-logo">Talkie</span>
-      <span class="nav-by">by Game Pill</span>
     </div>
     <a href="#get-access" class="nav-cta">Get Early Access</a>
   </nav>
 
   <!-- HERO -->
   <div class="hero">
-    <div class="hero-badge">✦ AI Avatar Creation as a Service</div>
+    <div class="hero-badge">✦ Custom Avatar Creation as a Service</div>
     <h1>
       Bring Your Brand<br />to Life with
       <span class="brand">Talkie</span>
     </h1>
     <p>
-      Custom AI avatars built for your world — bespoke personalities
+      Custom avatars built for your world — bespoke personalities
       that talk, interact, and represent your brand for entertainment,
       education, customer support, and beyond.
     </p>
@@ -735,36 +761,6 @@
       <div class="avatar-emoji float">🧙‍♂️</div>
       <div class="avatar-emoji float float-2">🦸‍♂️</div>
     </div>
-  </div>
-
-  <div class="divider"></div>
-
-  <!-- LIVE DEMO -->
-  <div class="demo-section" id="live-demo">
-    <div class="section-header">
-      <div class="label">Live Demo</div>
-      <h2>Talk to a Talkie. Right Now.</h2>
-      <p>This is a real AI character — powered by the same platform we build for brands. Ask it anything.</p>
-    </div>
-
-    <div class="demo-stage">
-      <div class="demo-screen">
-        <canvas id="demo-avatar-canvas" width="280" height="280"></canvas>
-        <div class="demo-status" id="demo-status">✦ Press talk to start</div>
-        <div class="demo-subtitle" id="demo-subtitle"></div>
-      </div>
-      <div class="demo-controls">
-        <button class="demo-btn" id="demo-btn" onclick="demoToggleTalk()">🎤 Talk</button>
-        <input class="demo-text-input" id="demo-text" type="text"
-          placeholder="Or type a message…"
-          onkeydown="if(event.key==='Enter') demoSendText()" />
-        <button class="demo-send-btn" onclick="demoSendText()">Send ↑</button>
-      </div>
-    </div>
-    <p class="demo-note">
-      Powered by <a href="https://uglabs.io" target="_blank">UG Labs</a> conversational AI.
-      WebSocket + Web Audio required.
-    </p>
   </div>
 
   <div class="divider"></div>
@@ -801,8 +797,8 @@
   <section>
     <div class="section-header">
       <div class="label">Enterprise Solutions</div>
-      <h2>Your Brand. Your AI.<br/>Fully Yours.</h2>
-      <p>We don't offer a generic chatbot. We build bespoke AI personalities — characters that carry your brand's voice, knowledge, and visual identity.</p>
+      <h2>Your Brand. Your Character.<br/>Fully Yours.</h2>
+      <p>We don't offer a generic chatbot. We build bespoke characters — personalities that carry your brand's voice, knowledge, and visual identity.</p>
     </div>
     <div class="enterprise-grid">
       <div class="enterprise-card">
@@ -823,6 +819,11 @@
     </div>
   </section>
 
+  <div class="cta-band">
+    <a href="#get-access" class="btn-primary">✦ Request Early Access</a>
+    <p>No commitment — tell us what you're building</p>
+  </div>
+
   <div class="divider"></div>
 
   <!-- USE CASE GALLERY -->
@@ -839,9 +840,9 @@
         <h3>Learning & Education</h3>
         <p>Chef Sylvain teaches culinary skills through real conversation — adapting to each student's pace, answering questions live, and making learning unforgettable.</p>
         <span class="usecase-tag">Education · Training</span>
-        <div class="uc-video-wrap">
-          <video src="chefsylvainnewdemo.mp4" autoplay muted loop playsinline></video>
-          <div class="uc-play-hint"><div class="play-icon">▶</div><span>Click to watch</span></div>
+        <div class="uc-video-wrap" data-yt="bpdc0eq2rQc">
+          <img src="https://img.youtube.com/vi/bpdc0eq2rQc/maxresdefault.jpg" alt="Chef Sylvain demo" style="width:100%;display:block;max-height:220px;object-fit:cover;" />
+          <div class="uc-play-hint" style="opacity:1;"><div class="play-icon">▶</div><span>Click to watch</span></div>
         </div>
       </div>
       <div class="usecase-card">
@@ -869,6 +870,47 @@
     </div>
   </section>
 
+  <div class="cta-band">
+    <a href="#get-access" class="btn-primary">✦ Build Your Character</a>
+    <p>We design it with you — brand voice, personality, and everything in between</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- LIVE DEMO -->
+  <div class="demo-section" id="live-demo">
+    <div class="section-header">
+      <div class="label">Live Demo</div>
+      <h2>Talk to a Talkie. Right Now.</h2>
+      <p>This is a real character — powered by the same platform we build for brands. Ask it anything.</p>
+    </div>
+
+    <div class="demo-stage" style="position:relative;">
+      <div id="demo-gate" onclick="demoGateClick()" style="position:absolute;inset:0;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);background:rgba(10,8,30,0.55);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;z-index:10;border-radius:28px;gap:12px;">
+        <div style="font-size:2.5rem;line-height:1;">▶</div>
+        <div style="font-weight:800;font-size:1.1rem;letter-spacing:0.06em;color:#fff;text-shadow:0 0 20px rgba(0,187,255,0.6);">Click to Play Demo</div>
+      </div>
+      <div class="demo-screen">
+        <canvas id="demo-avatar-canvas" width="364" height="364"></canvas>
+        <div class="demo-status" id="demo-status">✦ Press talk to start</div>
+        <div class="demo-subtitle" id="demo-subtitle"></div>
+      </div>
+      <div class="demo-controls">
+        <button class="demo-btn" id="demo-btn" onclick="demoToggleTalk()">🎤 Talk</button>
+        <button class="demo-icon-btn" id="demo-mute-btn" onclick="demoToggleMute()" title="Mute avatar audio">🔊</button>
+        <button class="demo-icon-btn" id="demo-pause-btn" onclick="demoTogglePause()" title="Pause conversation">⏸</button>
+        <input class="demo-text-input" id="demo-text" type="text"
+          placeholder="Or type a message…"
+          onkeydown="if(event.key==='Enter') demoSendText()" />
+        <button class="demo-send-btn" onclick="demoSendText()">Send ↑</button>
+      </div>
+    </div>
+    <p class="demo-note">
+      Powered by <a href="https://uglabs.io" target="_blank">UG Labs</a>.
+      WebSocket + Web Audio required.
+    </p>
+  </div>
+
   <div class="divider"></div>
 
   <!-- WHO IT'S FOR -->
@@ -876,7 +918,7 @@
     <div class="section-header">
       <div class="label">Built For Everyone</div>
       <h2>Consumers & Enterprises.<br/>One Powerful Platform.</h2>
-      <p>Whether you're creating for fun or deploying AI avatars at scale, Talkie is your platform.</p>
+      <p>Whether you're creating for fun or deploying avatars at scale, Talkie is your platform.</p>
     </div>
     <div class="who-grid">
       <div class="who-card consumer">
@@ -893,18 +935,26 @@
       </div>
       <div class="who-card enterprise">
         <span class="who-badge">For Enterprise</span>
-        <h3>Brand-embodied AI at scale.</h3>
+        <h3>Brand-embodied characters at scale.</h3>
         <p>Deploy interactive avatars that carry your brand's voice — for customer education, employee training, product demos, and more. Game Pill creates the models and visuals at the highest fidelity.</p>
         <ul class="who-list">
           <li>Customer-facing avatars for education & support</li>
           <li>Interactive product demos in your brand's voice</li>
-          <li>Employee training with AI roleplay scenarios</li>
+          <li>Employee training with interactive roleplay scenarios</li>
           <li>White-label solutions embedded in your platform</li>
           <li>Privacy-safe analytics on engagement & outcomes</li>
         </ul>
       </div>
     </div>
   </section>
+
+  <div class="cta-band">
+    <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;">
+      <a href="#get-access" class="btn-primary">✦ Get Early Access</a>
+      <a href="#live-demo" class="btn-secondary">Try the Demo ↓</a>
+    </div>
+    <p>Join the studios already building with Talkie</p>
+  </div>
 
   <div class="divider"></div>
 
@@ -1025,7 +1075,7 @@
     <div class="quote-strip">
       <blockquote>
         "The platform seamlessly blends creativity, engagement, and utility —
-        letting both individuals and businesses harness the power of AI-driven
+        letting both individuals and businesses harness the power of character-driven
         personalities for fun, connection, and real-world impact."
       </blockquote>
       <cite>— Mike Sorrenti, President · Game Pill Inc.</cite>
@@ -1235,6 +1285,9 @@
   // expose to inline onclick handlers
   window.demoToggleTalk = demoToggleTalk;
   window.demoSendText = demoSendText;
+  window.demoGateClick = demoGateClick;
+  window.demoToggleMute = demoToggleMute;
+  window.demoTogglePause = demoTogglePause;
 
   // ── INIT ───────────────────────────────────────────────────────
   async function demoInit() {
@@ -1257,6 +1310,54 @@
       setDemoStatus('✦ Ready to talk');
     } catch (e) {
       setDemoStatus('⚠️ Could not connect: ' + e.message);
+    }
+  }
+
+  // ── MUTE / PAUSE ───────────────────────────────────────────────
+  let _demoMuted = false;
+  let _demoPaused = false;
+
+  async function demoToggleMute() {
+    if (!_demoReady) return;
+    _demoMuted = !_demoMuted;
+    const btn = document.getElementById('demo-mute-btn');
+    try {
+      if (_demoMuted) {
+        await _demoManager.mute?.();
+        btn.textContent = '🔇';
+        btn.classList.add('muted');
+        btn.title = 'Unmute avatar audio';
+      } else {
+        await _demoManager.unmute?.();
+        btn.textContent = '🔊';
+        btn.classList.remove('muted');
+        btn.title = 'Mute avatar audio';
+      }
+    } catch (e) {
+      console.warn('mute not supported:', e);
+    }
+  }
+
+  async function demoTogglePause() {
+    if (!_demoReady) return;
+    _demoPaused = !_demoPaused;
+    const btn = document.getElementById('demo-pause-btn');
+    try {
+      if (_demoPaused) {
+        if (_demoListening) { await _demoManager.stopListening(); _demoListening = false; }
+        await _demoManager.pause?.();
+        btn.textContent = '▶';
+        btn.classList.add('active');
+        btn.title = 'Resume conversation';
+        setDemoStatus('⏸ Paused');
+      } else {
+        await _demoManager.resume?.();
+        btn.textContent = '⏸';
+        btn.classList.remove('active');
+        btn.title = 'Pause conversation';
+      }
+    } catch (e) {
+      console.warn('pause not supported:', e);
     }
   }
 
@@ -1307,6 +1408,12 @@
     if (state === 'idle' || state === 'waiting') {
       _demoIsNewMessage = true;
     }
+    // clear pause indicator if SDK resumed on its own
+    if (state !== 'paused' && _demoPaused) {
+      _demoPaused = false;
+      const pb = document.getElementById('demo-pause-btn');
+      if (pb) { pb.textContent = '⏸'; pb.classList.remove('active'); pb.title = 'Pause conversation'; }
+    }
   }
 
   function demoOnTextMessage(event) {
@@ -1328,15 +1435,12 @@
     if (el) el.textContent = text;
   }
 
-  // Auto-init when demo comes into view
-  const demoObserver = new IntersectionObserver((entries) => {
-    if (entries[0].isIntersecting && !_demoManager) {
-      demoInit();
-      demoObserver.disconnect();
-    }
-  }, { threshold: 0.3 });
-  const demoEl = document.getElementById('live-demo');
-  if (demoEl) demoObserver.observe(demoEl);
+  // Init demo only on gate click
+  function demoGateClick() {
+    const gate = document.getElementById('demo-gate');
+    if (gate) gate.style.display = 'none';
+    demoInit();
+  }
 
 
   // ── FORM ───────────────────────────────────────────────────────
@@ -1386,8 +1490,11 @@
   const overlay = document.getElementById('uc-video-overlay');
   const overlayVideo = overlay.querySelector('video');
   const closeBtn = document.getElementById('uc-video-close');
+  let overlayIframe = null;
 
-  function openOverlay(src) {
+  function openVideoOverlay(src) {
+    if (overlayIframe) { overlayIframe.remove(); overlayIframe = null; }
+    overlayVideo.style.display = 'block';
     overlayVideo.src = src;
     overlayVideo.muted = false;
     overlayVideo.volume = 0.7;
@@ -1395,25 +1502,45 @@
     overlayVideo.play().catch(() => { overlayVideo.muted = true; overlayVideo.play(); });
   }
 
+  function openYTOverlay(ytId) {
+    overlayVideo.pause();
+    overlayVideo.style.display = 'none';
+    if (overlayIframe) { overlayIframe.remove(); }
+    overlayIframe = document.createElement('iframe');
+    overlayIframe.src = 'https://www.youtube.com/embed/' + ytId + '?autoplay=1&rel=0';
+    overlayIframe.allow = 'autoplay; fullscreen; picture-in-picture';
+    overlayIframe.allowFullscreen = true;
+    overlayIframe.style.cssText = 'width:min(72vw,900px);max-height:80vh;border-radius:20px;border:none;aspect-ratio:16/9;';
+    overlayIframe.addEventListener('click', (e) => e.stopPropagation());
+    overlay.appendChild(overlayIframe);
+    overlay.classList.add('active');
+  }
+
   function closeOverlay() {
     overlay.classList.remove('active');
     overlayVideo.pause();
     overlayVideo.src = '';
+    overlayVideo.style.display = 'block';
+    if (overlayIframe) { overlayIframe.remove(); overlayIframe = null; }
   }
 
   document.querySelectorAll('.uc-video-wrap').forEach(wrap => {
-    const cardVideo = wrap.querySelector('video');
-    if (!cardVideo) return;
     wrap.addEventListener('click', (e) => {
       e.stopPropagation();
-      openOverlay(cardVideo.src);
+      const ytId = wrap.dataset.yt;
+      if (ytId) {
+        openYTOverlay(ytId);
+      } else {
+        const cardVideo = wrap.querySelector('video');
+        if (cardVideo) openVideoOverlay(cardVideo.src);
+      }
     });
   });
 
   // Close on X button or clicking the backdrop
   closeBtn.addEventListener('click', (e) => { e.stopPropagation(); closeOverlay(); });
   overlay.addEventListener('click', closeOverlay);
-  overlayVideo.addEventListener('click', (e) => e.stopPropagation()); // don't close when clicking video itself
+  overlayVideo.addEventListener('click', (e) => e.stopPropagation());
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeOverlay(); });
 </script>
 </body>
