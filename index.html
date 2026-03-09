@@ -1374,11 +1374,10 @@
       await _demoManager.startListening();
       _demoListening = true;
     } else {
-      // Not idle — interrupt if speaking, then wait for idle to start listening
+      // Not idle — interrupt and wait for idle to start listening
       _demoPendingListen = true;
-      if (_demoState === 'playing') {
-        await _demoManager.interrupt();
-      }
+      setDemoStatus('⏳ Stopping…');
+      await _demoManager.interrupt().catch(() => {});
     }
   }
 
