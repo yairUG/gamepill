@@ -1281,6 +1281,8 @@
   let _demoReady = false;
   let _demoListening = false;
   let _demoIsNewMessage = true;
+  let _demoState = 'idle';
+  let _demoPendingListen = false;
 
   // expose to inline onclick handlers
   window.demoToggleTalk = demoToggleTalk;
@@ -1364,12 +1366,19 @@
   // ── TOGGLE TALK ────────────────────────────────────────────────
   async function demoToggleTalk() {
     if (!_demoReady) { await demoInit(); return; }
-    if (!_demoListening) {
+    if (_demoListening) {
+      _demoPendingListen = false;
+      await _demoManager.stopListening();
+      _demoListening = false;
+    } else if (_demoState === 'idle') {
       await _demoManager.startListening();
       _demoListening = true;
     } else {
-      await _demoManager.stopListening();
-      _demoListening = false;
+      // Not idle — interrupt if speaking, then wait for idle to start listening
+      _demoPendingListen = true;
+      if (_demoState === 'playing') {
+        await _demoManager.interrupt();
+      }
     }
   }
 
@@ -1387,6 +1396,11 @@
 
   // ── CALLBACKS ──────────────────────────────────────────────────
   function demoOnStateChange(state) {
+    _demoState = state;
+    if (state === 'idle' && _demoPendingListen) {
+      _demoPendingListen = false;
+      _demoManager.startListening().then(() => { _demoListening = true; }).catch(() => {});
+    }
     const labels = {
       idle:         '✦ Ready to talk',
       initializing: '⏳ Connecting…',
